@@ -1,5 +1,6 @@
 package sikuli;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -12,7 +13,7 @@ import org.sikuli.script.Key;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
 
-public class Kardium {
+public class SendEmailKardium {
 	
 	public static void main(String args[]) throws FindFailed {
 		Screen s = new Screen();
@@ -27,33 +28,39 @@ public class Kardium {
 		searchBox.sendKeys("Kardium");
 		searchBox.sendKeys(Keys.ENTER);
 		
+		//sikuli
 		Pattern kardiumLink = new Pattern("C:\\Users\\Yiaoping\\eclipse-workspace\\Selenium\\imgs\\kardium.PNG").similar(0.8);
-		Pattern careers = new Pattern("C:\\Users\\Yiaoping\\eclipse-workspace\\Selenium\\imgs\\careers.PNG").similar(0.8);
-		Pattern testEngineer = new Pattern("C:\\Users\\Yiaoping\\eclipse-workspace\\Selenium\\imgs\\testEngineer.PNG").similar(0.8);
-		
 		s.wait(kardiumLink, 2);
 		s.click();
-		s.wait(careers, 2);
-		s.click();
-		int count = 0;
-		while(count<20) {
-			s.type(Key.PAGE_DOWN);
-			if(s.exists(testEngineer, 1) != null) {
-				break;
-			}
-			count++;
-		}
-		s.wait(testEngineer, 2);
-		s.click();
-		Pattern testEngineerDescription = new Pattern("C:\\Users\\Yiaoping\\eclipse-workspace\\Selenium\\imgs\\testEngineerDescription.PNG");
-
 		
-		if(s.exists(testEngineerDescription,2) != null) {
-			System.out.println("Sucessful!");
-		}
-		else {
-			System.out.println("Failed!");
-		}
+		//find the contact link and click it
+		WebElement contactLink = driver.findElement(By.linkText("CONTACT"));
+		contactLink.click();
+		
+		//scroll page down once
+		s.type(Key.PAGE_DOWN);
+		
+		//get the email address on the page using xpath
+		String email = driver.findElement(By.xpath("//li[@class='x-li-icon'][2]")).getText();
+		System.out.println(email);
+		
+		//open up mail
+		Pattern window = new Pattern("C:\\Users\\Yiaoping\\eclipse-workspace\\Selenium\\imgs\\window.PNG");
+		s.click(window);
+		s.type("mail");
+		s.type(Key.ENTER);
+		
+		
+		//compose a new mail
+		Pattern newMail = new Pattern("C:\\Users\\Yiaoping\\eclipse-workspace\\Selenium\\imgs\\newmail.PNG");
+		s.wait(newMail, 2);
+		s.click();
+		
+		//clicks on toBox
+		Pattern toBox = new Pattern("C:\\Users\\Yiaoping\\eclipse-workspace\\Selenium\\imgs\\toBox.PNG").similar(0.8);
+		s.click(toBox);
+		s.type(email);
+		
 	}
 
 }
