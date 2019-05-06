@@ -43,5 +43,7 @@
 	<classpathentry kind="lib" path="C:/Users/Yiaoping/Downloads/selenium-server-3.9.1/selenium-3.9.1-nodeps.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Yiaoping/Downloads/selenium-server-3.9.1/selenium-3.9.1-nodeps-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Yiaoping/Downloads/selenium-server-standalone-3.9.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="C:/Users/Yiaoping/Downloads/sikulixapi.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
