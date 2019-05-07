@@ -15,25 +15,27 @@ import org.sikuli.script.Screen;
 
 public class SendEmailKardium {
 	
+	public static WebDriver driver;
+	public static Screen s;
 	public static void main(String args[]) throws FindFailed {
-		Screen s = new Screen();
+		s = new Screen();
 		System.setProperty("webdriver.chrome.driver", "C:\\Users\\Yiaoping\\Downloads\\chromedriver_win32\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
+		
+		//open url
 		String url = "https://google.ca";
-		driver.get(url);
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		openURL(url);
+		
 		
 		WebElement searchBox = driver.findElement(By.name("q"));
 		searchBox.sendKeys("Kardium");
 		searchBox.sendKeys(Keys.ENTER);
 		
-		//sikuli
+		//Use sikuli to find image
 		Pattern kardiumLink = new Pattern("C:\\Users\\Yiaoping\\eclipse-workspace\\Selenium\\imgs\\kardium.PNG").similar(0.8);
-		s.wait(kardiumLink, 2);
+		s.wait(kardiumLink, 1);
 		s.click();
-		
-		//find the contact link and click it
+
+		//Use Selenium to find the contact menu link and click it
 		WebElement contactLink = driver.findElement(By.linkText("CONTACT"));
 		contactLink.click();
 		
@@ -44,12 +46,27 @@ public class SendEmailKardium {
 		String email = driver.findElement(By.xpath("//li[@class='x-li-icon'][2]")).getText();
 		System.out.println(email);
 		
-		//open up mail
+		
+		//calls the method to compose a new email through mail app. Passes in email
+		composeMail(email);
+				
+	}
+	
+	//creates new chromedriver object to open up google chrome and goes to link
+	public static void openURL(String url) {
+		driver = new ChromeDriver();
+		driver.get(url);
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	}
+	
+	
+	//method for opening up mail application and composing a new mail with addressee
+	public static void composeMail(String email) throws FindFailed {
 		Pattern window = new Pattern("C:\\Users\\Yiaoping\\eclipse-workspace\\Selenium\\imgs\\window.PNG");
 		s.click(window);
 		s.type("mail");
 		s.type(Key.ENTER);
-		
 		
 		//compose a new mail
 		Pattern newMail = new Pattern("C:\\Users\\Yiaoping\\eclipse-workspace\\Selenium\\imgs\\newmail.PNG");
